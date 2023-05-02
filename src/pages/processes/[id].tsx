@@ -1,6 +1,6 @@
-import { For, createEffect, createResource, createSignal } from "solid-js"
-import { supabase } from "../supabaseClient"
+import { createEffect, createSignal } from "solid-js"
 import { v4 as uuidv4 } from 'uuid'
+import { supabase } from "../../supabaseClient"
 import { useParams } from "@solidjs/router"
 
 
@@ -31,6 +31,7 @@ const Process = () => {
                     complement,
                     brand_id
                 `)
+                .eq("id", params.id)
                 .single()
 
             if (error) {
@@ -87,7 +88,7 @@ const Process = () => {
                 let option = document.createElement("option");
                 option.setAttribute('value', id);
 
-                let optionText = document.createTextNode(description());
+                let optionText = document.createTextNode(description);
                 option.appendChild(optionText);
 
                 list?.appendChild(option);

@@ -1,9 +1,10 @@
 import { createEffect, createSignal } from "solid-js"
-import { supabase } from "../supabaseClient"
-import { session } from "../App"
-import { v4 as uuidv4 } from 'uuid'
+import { supabase } from "../../supabaseClient"
+import { session } from "../../App"
+import { useParams } from "@solidjs/router"
 
 const Brand = () => {
+    const params = useParams()
     const [id, setID] = createSignal<string | null>(null)
     const [loading, setLoading] = createSignal(true)
     const [name, setName] = createSignal<string | null>(null)
@@ -25,7 +26,7 @@ const Brand = () => {
                     name, 
                     status
                 `)
-                .eq('customer_id', session()?.user.id)
+                .eq("id", params.id)
                 .single()
 
             if (error) {
@@ -52,9 +53,6 @@ const Brand = () => {
 
         try {
             setLoading(true)
-
-            if (!id())
-                setID(uuidv4())
 
             const updates = {
                 id: id(),

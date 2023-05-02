@@ -2,7 +2,6 @@ import { AuthSession } from '@supabase/supabase-js'
 import { Component, createEffect, createSignal } from 'solid-js'
 import { supabase } from '../supabaseClient'
 import Avatar from './Avatar';
-import { A } from '@solidjs/router';
 
 interface Props {
     session: AuthSession;
@@ -23,6 +22,7 @@ const Account: Component<Props> = ({ session }) => {
         try {
             setLoading(true)
             const { user } = session
+            console.log(session)
 
             let { data, error, status } = await supabase
                 .from('profiles')
@@ -83,8 +83,8 @@ const Account: Component<Props> = ({ session }) => {
 
     return (
         <div aria-live="polite">
-            <A href='/pages/brand'>Marca</A>
-            <form onSubmit={updateProfile} class="form-widget">
+            {/* <Header /> */}
+            <form onSubmit={updateProfile} class="">
                 <div>Email: {session.user.email}</div>
                 <div>
                     <label for="username">Username: </label>
@@ -118,12 +118,12 @@ const Account: Component<Props> = ({ session }) => {
                     updateProfile(e)
                 }} />
                 <div>
-                    <button type="submit" class="button primary block" disabled={loading()}>
-                        {loading() ? 'Saving ...' : 'Update profile'}
+                    <button type="submit" class="" disabled={loading()}>
+                        {loading() ? 'Salvando...' : 'Atualizar perfil'}
                     </button>
                 </div>
-                <button type="button" class="button block" onClick={() => supabase.auth.signOut()}>
-                    Sign Out
+                <button type="button" class="" onClick={() => supabase.auth.signOut()}>
+                    Sair
                 </button>
             </form>
         </div>

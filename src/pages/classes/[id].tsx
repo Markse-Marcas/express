@@ -1,8 +1,10 @@
 import { createEffect, createSignal } from "solid-js"
-import { supabase } from "../supabaseClient"
+import { supabase } from "../../supabaseClient"
 import { v4 as uuidv4 } from 'uuid'
+import { useParams } from "@solidjs/router"
 
 const Class = () => {
+    const params = useParams()
     const [baseNumber, setBaseNumber] = createSignal<number | undefined>()
     const [id, setID] = createSignal<string | null>("")
     const [loading, setLoading] = createSignal(true)
@@ -25,6 +27,7 @@ const Class = () => {
                     specification,
                     base_number
                 `)
+                .eq("id", params.id)
                 .single()
 
             if (error) {

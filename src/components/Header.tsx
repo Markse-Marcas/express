@@ -7,7 +7,11 @@ const Header: Component = () => {
         <div class='header'>
             <nav>
                 <A href='/'>Home</A>
-                <A href='/profile'>{!session() ? "Login" : "Account"}</A>
+                <A href='/pages/brands'>Marcas</A>
+                <A href='/pages/classes'>Classes</A>
+                <A href='/pages/phases'>Fases</A>
+                <A href='/pages/processes'>Processos</A>
+                <A href='/login'>{!session() ? "Login" : "Perfil"}</A>
             </nav>
         </div>
     )

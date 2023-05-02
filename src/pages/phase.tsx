@@ -1,42 +1,31 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../supabaseClient"
-import { session } from "../App"
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
-const Brand = () => {
-    const [id, setID] = createSignal<string | null>(null)
+const Phase = () => {
+    const [description, setDescription] = createSignal("")
     const [loading, setLoading] = createSignal(true)
-    const [name, setName] = createSignal<string | null>(null)
-    const [status, setStatus] = createSignal<string | null>(null)
+    const [id, setID] = createSignal("")
 
     createEffect(() => {
-        getBrand()
+        getPhase()
     })
 
-    const getBrand = async () => {
+    const getPhase = async () => {
         try {
             setLoading(true)
-
             let { data, error } = await supabase
-                .from('brand')
-                .select(`
-                    customer_id,
-                    id,
-                    name, 
-                    status
-                `)
-                .eq('customer_id', session()?.user.id)
+                .from("phase")
+                .select("id, description")
                 .single()
 
             if (error) {
                 throw error
             }
 
-
             if (data) {
                 setID(data.id)
-                setName(data.name)
-                setStatus(data.status)
+                setDescription(data.description)
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -47,7 +36,7 @@ const Brand = () => {
         }
     }
 
-    const updateBrand = async (e: Event) => {
+    const updatePhase = async (e: Event) => {
         e.preventDefault()
 
         try {
@@ -58,13 +47,11 @@ const Brand = () => {
 
             const updates = {
                 id: id(),
-                name: name(),
-                status: status(),
-                customer_id: session()?.user.id
+                description: description()
             }
 
             let { error } = await supabase
-                .from('brand')
+                .from('phase')
                 .upsert(updates)
                 .select()
 
@@ -82,28 +69,19 @@ const Brand = () => {
 
     return (
         <div aria-live="polite">
-            <form onSubmit={updateBrand} class="">
+            <form onSubmit={updatePhase} class="">
                 <div>
-                    <label for="name">Nome: </label>
+                    <label for="description">Descrição: </label>
                     <input
-                        id="name"
+                        id="description"
                         type="text"
-                        value={name() || ''}
-                        onChange={(e) => setName(e.currentTarget.value)}
-                    />
-                </div>
-                <div>
-                    <label for="status">Status</label>
-                    <input
-                        id="status"
-                        type="text"
-                        value={status() || ''}
-                        onChange={(e) => setStatus(e.currentTarget.value)}
+                        value={description() || ''}
+                        onChange={(e) => setDescription(e.currentTarget.value)}
                     />
                 </div>
                 <div>
                     <button type="submit" class="" disabled={loading()}>
-                        {loading() ? 'Carregando...' : 'Atualizar marca'}
+                        {loading() ? 'Carregando...' : 'Atualizar fase'}
                     </button>
                 </div>
             </form>
@@ -111,4 +89,4 @@ const Brand = () => {
     )
 }
 
-export default Brand
+export default Phase

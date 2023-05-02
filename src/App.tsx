@@ -1,7 +1,6 @@
 import { createEffect, createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
 import { AuthSession } from '@supabase/supabase-js'
-import { A } from '@solidjs/router'
 import Account from './components/Account'
 import Auth from './Auth'
 
@@ -21,8 +20,7 @@ const App = () => {
 
   return (
     <>
-      <A href='/'>Home</A>
-      <div class="container" style={{ padding: '50px 0 100px 0' }}>
+      <div class="" style={{ padding: '50px 0 100px 0' }}>
         {!session() ? <Auth /> : <Account session={session()!} />}
       </div>
     </>

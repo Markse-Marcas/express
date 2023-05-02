@@ -66,18 +66,18 @@ const Avatar: Component<Props> = (props) => {
                 <img
                     src={avatarUrl()!}
                     alt={avatarUrl() ? 'Avatar' : 'No image'}
-                    class="avatar image"
+                    class=""
                     style={{ height: `${props.size}px`, width: `${props.size}px` }}
                 />
             ) : (
                 <div
-                    class="avatar no-image"
+                    class=""
                     style={{ height: `${props.size}px`, width: `${props.size}px` }}
                 />
             )}
             <div style={{ width: `${props.size}px` }}>
-                <label class="button primary block" for="single">
-                    {uploading() ? 'Uploading ...' : 'Upload avatar'}
+                <label class="" for="single">
+                    {uploading() ? 'Atualizando...' : 'Atualizar foto'}
                 </label>
                 <span style="display:none">
                     <input
