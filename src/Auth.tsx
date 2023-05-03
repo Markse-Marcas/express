@@ -10,7 +10,7 @@ export default function Auth() {
 
         try {
             setLoading(true)
-            const { error } = await supabase.auth.signInWithOtp({ email: email(), options: { emailRedirectTo: 'http://localhost:3000/profile' } })
+            const { error } = await supabase.auth.signInWithOtp({ email: email(), options: { emailRedirectTo: 'https://markse-express.netlify.app/profile' } })
             // const { error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
             if (error) throw error
             alert('Cheque o teu e-mail para visualizar o link de acesso!')
