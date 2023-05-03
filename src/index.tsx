@@ -3,7 +3,6 @@ import { render } from 'solid-js/web';
 import Home from './pages/Home';
 import { lazy } from 'solid-js';
 import { Route, Router, Routes } from '@solidjs/router';
-import { session } from './App';
 
 const App = lazy(() => import('./App'));
 const Brand = lazy(() => import('./pages/brands/[id]'));

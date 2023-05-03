@@ -2,6 +2,7 @@ import { AuthSession } from '@supabase/supabase-js'
 import { Component, createEffect, createSignal } from 'solid-js'
 import { supabase } from '../supabaseClient'
 import Avatar from './Avatar';
+import { A } from '@solidjs/router';
 
 interface Props {
     session: AuthSession;
@@ -22,7 +23,6 @@ const Account: Component<Props> = ({ session }) => {
         try {
             setLoading(true)
             const { user } = session
-            console.log(session)
 
             let { data, error, status } = await supabase
                 .from('profiles')
@@ -82,49 +82,78 @@ const Account: Component<Props> = ({ session }) => {
     }
 
     return (
-        <div aria-live="polite">
-            {/* <Header /> */}
-            <form onSubmit={updateProfile} class="">
-                <div>Email: {session.user.email}</div>
-                <div>
-                    <label for="username">Username: </label>
-                    <input
-                        id="username"
-                        type="text"
-                        value={username() || ''}
-                        onChange={(e) => setUsername(e.currentTarget.value)}
-                    />
-                </div>
-                <div>
-                    <label for="name">Nome: </label>
-                    <input
-                        id="name"
-                        type="text"
-                        value={name() || ''}
-                        onChange={(e) => setName(e.currentTarget.value)}
-                    />
-                </div>
-                <div>
-                    <label for="phone">Telefone celular</label>
-                    <input
-                        id="phone"
-                        type="text"
-                        value={phone() || ''}
-                        onChange={(e) => setPhone(e.currentTarget.value)}
-                    />
-                </div>
-                <Avatar url={avatarUrl()} size={150} onUpload={(e: Event, url: string) => {
-                    setAvatarUrl(url)
-                    updateProfile(e)
-                }} />
-                <div>
-                    <button type="submit" class="" disabled={loading()}>
-                        {loading() ? 'Salvando...' : 'Atualizar perfil'}
+        <div class="flex flex-col" aria-live="polite">
+            <A href="/pages/brands">Suas marcas</A>
+            <form onSubmit={updateProfile}>
+                <div class="grid grid-cols-1">
+                    <div class="avatar">
+                        <div class="w-24 rounded">
+                            <Avatar url={avatarUrl()} size={220} onUpload={(e: Event, url: string) => {
+                                setAvatarUrl(url)
+                                updateProfile(e)
+                            }} />
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span>E-mail</span>
+                            <input
+                                type="text"
+                                value={session.user.email}
+                                class="input input-bordered w-full max-w-xs"
+                                disabled
+                            />
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span>Username</span>
+                            <input
+                                type="text"
+                                id="username"
+                                class="input input-bordered w-full max-w-xs"
+                                value={username() || ''}
+                                onChange={(e) => setUsername(e.currentTarget.value)}
+                            />
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span>Nome</span>
+                            <input
+                                type="text"
+                                id="name"
+                                class="input input-bordered w-full max-w-xs"
+                                value={name() || ''}
+                                onChange={(e) => setName(e.currentTarget.value)}
+                            />
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span>Telefone celular</span>
+                            <input
+                                type="text"
+                                id="name"
+                                class="input input-bordered w-full max-w-xs"
+                                value={phone() || ''}
+                                onChange={(e) => setPhone(e.currentTarget.value)}
+                            />
+                        </label>
+                    </div>
+                    {/* <Avatar url={avatarUrl()} size={150} onUpload={(e: Event, url: string) => {
+                        setAvatarUrl(url)
+                        updateProfile(e)
+                    }} /> */}
+                    <div>
+                        <button type="submit" class="btn" disabled={loading()}>
+                            {loading() ? 'Salvando...' : 'Atualizar perfil'}
+                        </button>
+                    </div>
+                    <button type="button" class="btn" onClick={() => supabase.auth.signOut()}>
+                        Sair
                     </button>
                 </div>
-                <button type="button" class="" onClick={() => supabase.auth.signOut()}>
-                    Sair
-                </button>
             </form>
         </div>
     )

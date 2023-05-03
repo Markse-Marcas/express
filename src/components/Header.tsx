@@ -4,16 +4,9 @@ import session from '../App'
 
 const Header: Component = () => {
     return (
-        <div class='header'>
-            <nav>
-                <A href='/'>Home</A>
-                <A href='/pages/brands'>Marcas</A>
-                <A href='/pages/classes'>Classes</A>
-                <A href='/pages/phases'>Fases</A>
-                <A href='/pages/processes'>Processos</A>
-                <A href='/login'>{!session() ? "Login" : "Perfil"}</A>
-            </nav>
-        </div>
+        <ul class="menu menu-horizontal bg-base-100 rounded-box ">
+            <li><A href='/pages/brands'>Marcas</A></li>
+        </ul>
     )
 }
 

@@ -28,6 +28,7 @@ const Classes = () => {
                     let elementText = document.createTextNode(classes[item])
                     if (item == "number") {
                         let a = document.createElement("a")
+                        a.className = "link"
                         a.href = `/pages/classes/${classes.id}`
                         a.textContent = `${elementText.textContent}`
                         td.appendChild(a)
@@ -55,8 +56,8 @@ const Classes = () => {
     }
 
     return (
-        <div>
-            <table id="classes">
+        <div class="overflow-x-auto">
+            <table id="classes" class="table w-full">
                 <thead>
                     <tr>
                         <th id="id">ID</th>

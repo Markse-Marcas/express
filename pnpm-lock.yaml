@@ -7,9 +7,15 @@ dependencies:
   '@supabase/supabase-js':
     specifier: ^2.21.0
     version: 2.21.0
+  autoprefixer:
+    specifier: ^10.4.14
+    version: 10.4.14(postcss@8.4.23)
   daisyui:
     specifier: ^2.51.6
     version: 2.51.6(autoprefixer@10.4.14)(postcss@8.4.23)
+  postcss:
+    specifier: ^8.4.23
+    version: 8.4.23
   solid-js:
     specifier: ^1.7.3
     version: 1.7.3

@@ -29,6 +29,7 @@ const Brands = () => {
                     let elementText = document.createTextNode(brands[item])
                     if (item == "name") {
                         let a = document.createElement("a")
+                        a.className = "link"
                         a.href = `/pages/brands/${brands.id}`
                         a.textContent = `${elementText.textContent}`
                         td.appendChild(a)
@@ -55,14 +56,15 @@ const Brands = () => {
     }
 
     return (
-        <div>
-            <table id="brands">
+        <div class="overflow-x-auto">
+            <table id="brands" class="table w-full">
                 <thead>
                     <tr>
-                        <th id="id">ID</th>
+                        <th></th>
                         <th id="name">Marca</th>
                         <th id="status">Status</th>
                         <th id="customer">Cliente</th>
+                        <th id="processes">Processos</th>
                     </tr>
                 </thead>
                 <tbody id="brand-content">

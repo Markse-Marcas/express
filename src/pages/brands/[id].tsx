@@ -79,22 +79,28 @@ const Brand = () => {
     }
 
     return (
-        <div aria-live="polite">
+        <div class="container" aria-live="polite">
             <form onSubmit={updateBrand} class="">
-                <div>
-                    <label for="name">Nome: </label>
+                <div class="form-control w-full max-w-xs">
+                    <label class="label">
+                        <span class="label-text">Nome da marca</span>
+                    </label>
                     <input
                         id="name"
                         type="text"
+                        class="input input-bordered w-full max-w-xs"
                         value={name() || ''}
                         onChange={(e) => setName(e.currentTarget.value)}
                     />
                 </div>
-                <div>
-                    <label for="status">Status</label>
+                <div class="form-control w-full max-w-xs">
+                    <label class="label">
+                        <span class="label-text">Status</span>
+                    </label>
                     <input
                         id="status"
                         type="text"
+                        class="input input-bordered w-full max-w-xs"
                         value={status() || ''}
                         onChange={(e) => setStatus(e.currentTarget.value)}
                     />
@@ -105,7 +111,7 @@ const Brand = () => {
                     </button>
                 </div>
             </form>
-        </div>
+        </div >
     )
 }
 

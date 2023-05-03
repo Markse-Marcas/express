@@ -10,7 +10,7 @@ export default function Auth() {
 
         try {
             setLoading(true)
-            const { error } = await supabase.auth.signInWithOtp({ email: email() })
+            const { error } = await supabase.auth.signInWithOtp({ email: email(), options: { emailRedirectTo: 'http://localhost:3000/profile' } })
             // const { error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
             if (error) throw error
             alert('Cheque o teu e-mail para visualizar o link de acesso!')
@@ -24,30 +24,6 @@ export default function Auth() {
     }
 
     return (
-        // <div class="">
-        //     <div class="" aria-live="polite">
-        //         <h1 class="">Markse Express</h1>
-        //         <p class="">Faça login pelo link enviado ao e-mail abaixo</p>
-        //         <form class="" onSubmit={handleLogin}>
-        //             <div>
-        //                 <label for="email">Email</label>
-        //                 <input
-        //                     id="email"
-        //                     class=""
-        //                     type="email"
-        //                     placeholder="Your email"
-        //                     value={email()}
-        //                     onChange={(e) => setEmail(e.currentTarget.value)}
-        //                 />
-        //             </div>
-        //             <div>
-        // <button type="submit" class="" aria-live="polite">
-        //     {loading() ? <span>Carregando...</span> : <span>Enviar link</span>}
-        // </button>
-        //             </div>
-        //         </form>
-        //     </div>
-        // </div>
         <div class="hero min-h-screen bg-base-200" aria-live="polite">
             <div class="hero-content flex-col lg:flex-row-reverse">
                 <div class="text-center lg:text-left">
@@ -62,7 +38,7 @@ export default function Auth() {
                                     <span class="label-text">E-mail</span>
                                 </label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     placeholder="marca@dominio.com"
                                     class="input input-bordered"
                                     value={email()}

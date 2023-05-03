@@ -68,8 +68,7 @@ const Avatar: Component<Props> = (props) => {
                     alt={avatarUrl() ? 'Avatar' : 'No image'}
                     class=""
                     style={{ height: `${props.size}px`, width: `${props.size}px` }}
-                />
-            ) : (
+                />) : (
                 <div
                     class=""
                     style={{ height: `${props.size}px`, width: `${props.size}px` }}
@@ -82,6 +81,7 @@ const Avatar: Component<Props> = (props) => {
                 <span style="display:none">
                     <input
                         type="file"
+                        class="file-input w-full max-w-xs"
                         id="single"
                         accept="image/*"
                         onChange={uploadAvatar}

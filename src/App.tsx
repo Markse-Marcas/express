@@ -19,11 +19,9 @@ const App = () => {
   })
 
   return (
-    <>
-      <div class="" style={{ padding: '50px 0 100px 0' }}>
-        {!session() ? <Auth /> : <Account session={session()!} />}
-      </div>
-    </>
+    <div class="md:container md:mx-auto">
+      {!session() ? <Auth /> : <Account session={session()!} />}
+    </div>
   )
 }
 

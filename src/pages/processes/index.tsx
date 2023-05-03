@@ -29,6 +29,7 @@ const Processes = () => {
                     let elementText = document.createTextNode(phases[item])
                     if (item == "description") {
                         let a = document.createElement("a")
+                        a.className = "link"
                         a.href = `/pages/phases/${phases.id}`
                         a.textContent = `${elementText.textContent}`
                         td.appendChild(a)
@@ -53,9 +54,9 @@ const Processes = () => {
     }
 
     return (
-        <div>
+        <div class="overflow-x-auto">
             <A href="/pages/processes/:id">Cadastrar processo</A>
-            <table id="processes">
+            <table id="processes" class="table w-full">
                 <thead>
                     <tr>
                         <th id="id">ID</th>
