@@ -81,7 +81,6 @@ const Avatar: Component<Props> = (props) => {
                 <span style="display:none">
                     <input
                         type="file"
-                        class="file-input w-full max-w-xs"
                         id="single"
                         accept="image/*"
                         onChange={uploadAvatar}

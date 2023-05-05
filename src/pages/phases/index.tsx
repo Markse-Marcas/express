@@ -53,8 +53,8 @@ const Phases = () => {
     }
 
     return (
-        <div class="overflow-x-auto">
-            <table id="phases" class="table w-full">
+        <div class="">
+            <table id="phases" class="">
                 <thead>
                     <tr>
                         <th id="id">ID</th>

@@ -6,8 +6,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview",
-    "build:css": "postcss src/tailwind.css -o static/dist/tailwind.css"
+    "serve": "vite preview"
   },
   "license": "MIT",
   "devDependencies": {
@@ -19,9 +18,6 @@
   "dependencies": {
     "@solidjs/router": "^0.8.2",
     "@supabase/supabase-js": "^2.21.0",
-    "autoprefixer": "^10.4.14",
-    "daisyui": "^2.51.6",
-    "postcss": "^8.4.23",
     "solid-js": "^1.7.3",
     "uuid": "^9.0.0"
   }

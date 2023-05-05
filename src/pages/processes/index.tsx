@@ -1,6 +1,7 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
-import { A } from "@solidjs/router"
+import { A, useParams } from "@solidjs/router"
+import { brandId } from "../brands"
 
 const Processes = () => {
     const [loading, setLoading] = createSignal(false)
@@ -14,6 +15,7 @@ const Processes = () => {
             const { data, error } = await supabase
                 .from('process')
                 .select('id, number, activity_class, description, complement')
+                .eq("brand_id", brandId())
 
             if (error) {
                 throw error
@@ -54,9 +56,9 @@ const Processes = () => {
     }
 
     return (
-        <div class="overflow-x-auto">
+        <div>
             <A href="/pages/processes/:id">Cadastrar processo</A>
-            <table id="processes" class="table w-full">
+            <table id="processes" class="">
                 <thead>
                     <tr>
                         <th id="id">ID</th>

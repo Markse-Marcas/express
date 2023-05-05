@@ -1,19 +1,24 @@
 import { createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
+import { A } from '@solidjs/router'
 
 export default function Auth() {
-    const [loading, setLoading] = createSignal(false)
     const [email, setEmail] = createSignal('')
+    const [loading, setLoading] = createSignal(false)
+    const [password, setPassword] = createSignal('')
 
     const handleLogin = async (e: SubmitEvent) => {
         e.preventDefault()
 
         try {
             setLoading(true)
-            const { error } = await supabase.auth.signInWithOtp({ email: email(), options: { emailRedirectTo: 'https://markse-express.netlify.app/profile' } })
-            // const { error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
+            const { data, error } = await supabase.auth.signInWithPassword(
+                {
+                    email: email(),
+                    password: password()
+                }
+            )
             if (error) throw error
-            alert('Cheque o teu e-mail para visualizar o link de acesso!')
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -24,36 +29,48 @@ export default function Auth() {
     }
 
     return (
-        <div class="hero min-h-screen bg-base-200" aria-live="polite">
-            <div class="hero-content flex-col lg:flex-row-reverse">
-                <div class="text-center lg:text-left">
-                    <h1 class="text-5xl font-bold">Entrar</h1>
-                    <p class="py-6">Autentique-se para poder ver o(s) statu(s) da(s) tua(s) marca(s)</p>
-                </div>
-                <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                    <form onsubmit={handleLogin}>
-                        <div class="card-body">
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">E-mail</span>
-                                </label>
+        <>
+            <div class="form">
+                <form onSubmit={handleLogin}>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <div class="input-box">
+                                <label for="email">E-mail</label>
                                 <input
-                                    type="email"
-                                    placeholder="marca@dominio.com"
-                                    class="input input-bordered"
-                                    value={email()}
+                                    id="email"
+                                    type="text"
+                                    name="firstname"
+                                    placeholder="Digite seu e-mail"
+                                    value={email() || ''}
                                     onChange={(e) => setEmail(e.currentTarget.value)}
+                                    required
                                 />
                             </div>
-                            <div class="form-control mt-6">
-                                <button type="submit" class="btn btn-primary" aria-live="polite">
-                                    {loading() ? <span>Carregando...</span> : <span>Enviar link</span>}
-                                </button>
+
+                            <div class="input-box">
+                                <label for="password">Senha</label>
+                                <input
+                                    id="password"
+                                    type="text"
+                                    name="password"
+                                    placeholder="Digite sua senha"
+                                    value={password() || ''}
+                                    onChange={(e) => setPassword(e.currentTarget.value)}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <span>Não tem uma conta? <A href="/signup">Crie aqui</A></span>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="continue-button">
+                        <button type="submit" class="continue-button" disabled={loading()}>
+                            {loading() ? 'Entrando...' : 'Entrar'}
+                        </button>
+                    </div>
+                </form>
             </div>
-        </div>
+        </>
     )
 }

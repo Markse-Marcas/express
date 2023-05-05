@@ -56,8 +56,8 @@ const Classes = () => {
     }
 
     return (
-        <div class="overflow-x-auto">
-            <table id="classes" class="table w-full">
+        <div class="">
+            <table id="classes" class="">
                 <thead>
                     <tr>
                         <th id="id">ID</th>

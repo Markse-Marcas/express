@@ -2,6 +2,7 @@ import { createEffect, createSignal } from "solid-js"
 import { v4 as uuidv4 } from 'uuid'
 import { supabase } from "../../supabaseClient"
 import { useParams } from "@solidjs/router"
+import { brandId } from "../brands"
 
 
 const Process = () => {
@@ -53,6 +54,7 @@ const Process = () => {
         } finally {
             setLoading(false)
             getAllPhases()
+            getAllClasses()
         }
     }
 
@@ -64,6 +66,50 @@ const Process = () => {
 
             if (error) {
                 throw error
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message)
+            }
+        }
+    }
+
+    const insertDataOnBrandClassTable = async (brandId: string, classId: string) => {
+        try {
+            const { error } = await supabase
+                .from('brand_class')
+                .insert({ brand_id: brandId, class_id: classId })
+
+            if (error) {
+                throw error
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message)
+            }
+        }
+    }
+
+    const getAllClasses = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('class')
+                .select('id, number')
+
+            if (error) {
+                throw error
+            }
+
+            const list = document.getElementById("classes")
+
+            for (let { id, number } of data) {
+                let option = document.createElement("option");
+                option.setAttribute('value', id);
+
+                let optionText = document.createTextNode(`${number}`);
+                option.appendChild(optionText);
+
+                list?.appendChild(option);
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -126,6 +172,7 @@ const Process = () => {
 
             if (data) {
                 insertDataOnPhaseProcessTable(phase(), id())
+                insertDataOnBrandClassTable(brandId(), activityClass())
             }
 
             if (error) {
@@ -170,7 +217,7 @@ const Process = () => {
                         onChange={(e) => setComplement(e.currentTarget.value)}
                     />
                 </div>
-                <div>
+                {/* <div>
                     <label for="activityClass">Classe de atividade</label>
                     <input
                         id="activityClass"
@@ -178,15 +225,20 @@ const Process = () => {
                         value={activityClass() || ''}
                         onChange={(e) => setActivityClass(e.currentTarget.value)}
                     />
+                </div> */}
+                <div>
+                    <select name="classes" id="classes" required onchange={(e) => { setActivityClass(e.target.value); }}>
+                        <option selected disabled>Escolha uma classe: </option>
+                    </select>
                 </div>
                 <div>
                     <select name="phases" id="phases" required onchange={(e) => { setPhase(e.target.value); }}>
-                        <option selected disabled>Escolha uma opção: </option>
+                        <option selected disabled>Escolha uma fase: </option>
                     </select>
                 </div>
                 <div>
                     <button type="submit" class="" disabled={loading()}>
-                        {loading() ? 'Carregando...' : 'Atualizar processo'}
+                        {loading() ? 'Carregando...' : 'Salvar'}
                     </button>
                 </div>
             </form>

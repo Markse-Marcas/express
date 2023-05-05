@@ -15,6 +15,7 @@ const Phase = lazy(() => import('./pages/phases/[id]'));
 const Phases = lazy(() => import('./pages/phases/index'));
 const Process = lazy(() => import('./pages/processes/[id]'));
 const Processes = lazy(() => import('./pages/processes/index'));
+const SignUp = lazy(() => import('./SignUp'));
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -30,6 +31,7 @@ render(
       <Routes>
         <Route path="/" component={Home} />
         <Route path="/profile" component={App} />
+        <Route path="/signup" component={SignUp} />
         <Route path="/pages/brands">
           <Route path="/" component={Brands} />
           <Route path="/:id?" component={Brand} />
