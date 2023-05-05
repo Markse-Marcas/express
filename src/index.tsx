@@ -2,7 +2,7 @@
 import { render } from 'solid-js/web';
 import Home from './pages/Home';
 import { lazy } from 'solid-js';
-import { Route, Router, Routes } from '@solidjs/router';
+import { Route, Router, Routes, hashIntegration } from '@solidjs/router';
 
 const App = lazy(() => import('./App'));
 const Brand = lazy(() => import('./pages/brands/[id]'));
@@ -27,7 +27,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
   () => (
-    <Router>
+    <Router source={hashIntegration()}>
       <Routes>
         <Route path="/" component={Home} />
         <Route path="/profile" component={App} />
