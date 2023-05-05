@@ -27,9 +27,9 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
   () => (
-    <Router source={hashIntegration()}>
+    <Router>
       <Routes>
-        <Route path="/#" component={Home} />
+        <Route path="/" component={Home} />
         <Route path="/profile" component={App} />
         <Route path="/signup" component={SignUp} />
         <Route path="/pages/brands">
