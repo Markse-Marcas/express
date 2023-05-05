@@ -29,7 +29,7 @@ render(
   () => (
     <Router source={hashIntegration()}>
       <Routes>
-        <Route path="/" component={Home} />
+        <Route path="/#" component={Home} />
         <Route path="/profile" component={App} />
         <Route path="/signup" component={SignUp} />
         <Route path="/pages/brands">
