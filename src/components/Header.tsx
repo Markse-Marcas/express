@@ -4,12 +4,21 @@ import { supabase } from '../supabaseClient'
 
 const Header: Component = () => {
     return (
-        <ul class="menu menu-horizontal bg-base-100 rounded-box ">
-            <li><A href='/pages/brands'>Marcas</A></li>
-            <button type="button" class="" onClick={() => supabase.auth.signOut()}>
-                Sair
-            </button>
-        </ul>
+        <>
+            <header>
+                <nav>
+                    <div class="mobile-menu">
+                        <div class="line-1"></div>
+                        <div class="line-2"></div>
+                        <div class="line-3"></div>
+                    </div>
+                    <ul class="nav-list">
+                        <li><A href='/pages/brands'>Marcas</A></li>
+                        <li><a href='#' onclick={() => { supabase.auth.signOut() }}>Sair</a></li>
+                    </ul>
+                </nav>
+            </header>
+        </>
     )
 }
 
