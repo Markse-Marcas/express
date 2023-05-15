@@ -16,7 +16,7 @@ body,
 }
 
 body {
-    font-family: "Roboto Mono";
+    font-family: 'Roboto', sans-serif;
     font-size: 1.125rem;
 }
 
@@ -26,6 +26,13 @@ body {
     background: linear-gradient(rgba(0, 0, 0, 0.342), rgba(0, 0, 0, 0.342)),
         url("../assets/entry-point-medium.jpg") no-repeat center bottom / cover;
     color: whitesmoke;
+}
+
+.table-container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .container {
@@ -71,7 +78,7 @@ nav {
     justify-content: space-around;
     align-items: center;
     font-family: "Roboto Mono";
-    background: #EB984E;
+    background: #7D6608;
     height: 8vh;
 }
 
@@ -95,6 +102,10 @@ nav {
     height: 0.125rem;
     background: #fff;
     margin: 0.5rem;
+}
+
+a.inactive {
+    color: #000;
 }
 
 .form {
@@ -154,7 +165,8 @@ nav {
     margin-bottom: 1.1rem;
 }
 
-.input-box input {
+.input-box input,
+.input-box select {
     margin: 0.6rem 0;
     padding: 0.8rem 1.2rem;
     border: none;
@@ -164,11 +176,13 @@ nav {
     font-family: 'Roboto', sans-serif;
 }
 
-.input-box input:hover {
+.input-box input:hover,
+.input-box select:hover {
     background-color: #eeeeee75;
 }
 
-.input-box input:focus-visible {
+.input-box input:focus-visible,
+.input-box select:focus-visible {
     outline: 0.063rem solid #6c63ff;
 }
 
@@ -201,6 +215,40 @@ nav {
     font-size: 0.93rem;
     font-weight: 500;
     color: #fff;
+}
+
+table {
+    width: 50rem;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 0.938rem;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+thead th {
+    background-color: #55608f;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+tbody td {
+    position: relative;
+}
+
+.create-element {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
 }
 
 @media screen and (max-width: 83.125rem) {
@@ -248,7 +296,7 @@ nav {
 @media screen and (max-width: 66.5rem) {
     .container {
         width: 90%;
-        height: auto;
+        height: 100%;
     }
 
     .input-group {

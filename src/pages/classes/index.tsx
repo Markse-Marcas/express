@@ -20,9 +20,9 @@ const Classes = () => {
 
             const table = document.getElementById("classes")
             const tbody = document.getElementById("class-content") as HTMLElement
-            const tr = document.createElement("tr")
 
             data.map((classes) => {
+                const tr = document.createElement("tr")
                 for (let item in classes) {
                     let td = document.createElement("td")
                     let elementText = document.createTextNode(classes[item])
@@ -56,8 +56,8 @@ const Classes = () => {
     }
 
     return (
-        <div class="">
-            <table id="classes" class="">
+        <div class="table-container">
+            <table id="classes">
                 <thead>
                     <tr>
                         <th id="id">ID</th>

@@ -1,10 +1,9 @@
 import { createSignal } from "solid-js"
-import { supabase } from "./supabaseClient"
-import { v4 as uuidv4, validate } from 'uuid'
+import { supabase } from "../../supabaseClient"
+import { A } from "@solidjs/router"
 
-const SignUp = () => {
+const CreateCustomer = () => {
     const [email, setEmail] = createSignal('')
-    const [id, setID] = createSignal("")
     const [lastName, setLastName] = createSignal('')
     const [loading, setLoading] = createSignal(false)
     const [name, setName] = createSignal('')
@@ -18,33 +17,32 @@ const SignUp = () => {
 
         try {
             setLoading(true)
-            setID(uuidv4())
 
             if (password() != confirmPassword()) {
                 alert("As senhas não coincidem.");
                 return false;
             }
 
-            const { data, error } = await supabase.auth.signUp({
-                email: email(),
-                password: password(),
-                options: {
-                    data: {
-                        name: name(),
-                        last_name: lastName(),
-                        phone: phone(),
-                        username: username(),
-                        id: id()
+            const { data, error } = await supabase
+                .auth
+                .signUp({
+                    email: email(),
+                    password: password(),
+                    options: {
+                        data: {
+                            last_name: lastName(),
+                            name: name(),
+                            phone: phone(),
+                            username: username()
+                        }
                     }
-                    // , emailRedirectTo: 'https://main--markse-express.netlify.app/profile'
-                }
-            })
+                })
 
             if (error) {
                 throw error
             }
 
-            window.location.href = "/profile"
+            // window.location.href = "/"
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -56,9 +54,15 @@ const SignUp = () => {
 
     return (
         <>
+            <nav>
+                <ul class="nav-list">
+                    <li>
+                        <A href="/profile">Perfil</A>
+                    </li>
+                </ul>
+            </nav>
             <div class="container">
                 <div class="form">
-                    <span>Cadastre-se</span>
                     <form onSubmit={handleSignUp}>
                         <div class="input-group">
                             <div class="input-box">
@@ -160,4 +164,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default CreateCustomer

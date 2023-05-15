@@ -1,39 +1,42 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
 
-const Phases = () => {
+const AllClasses = () => {
     createEffect(() => {
-        getPhases()
+        getClasses()
     })
 
-    const getPhases = async () => {
+    const getClasses = async () => {
         try {
             const { data, error } = await supabase
-                .from('phase')
-                .select('id, description')
+                .from('class')
+                .select('id, number, specification, base_number')
 
             if (error) {
                 throw error
             }
 
-            const table = document.getElementById("phases")
-            const tbody = document.getElementById("phase-content") as HTMLElement
+            const table = document.getElementById("classes")
+            const tbody = document.getElementById("class-content") as HTMLElement
 
-            data.map((phases) => {
+            data.map((classes) => {
                 const tr = document.createElement("tr")
-                for (let item in phases) {
+                for (let item in classes) {
                     let td = document.createElement("td")
-                    let elementText = document.createTextNode(phases[item])
-                    if (item == "description") {
+                    let elementText = document.createTextNode(classes[item])
+                    if (item == "number") {
                         let a = document.createElement("a")
                         a.className = "link"
-                        a.href = `/pages/phases/${phases.id}`
+                        a.href = `/pages/classes/${classes.id}`
                         a.textContent = `${elementText.textContent}`
                         td.appendChild(a)
                     }
 
+                    if (elementText.textContent == "null")
+                        elementText.textContent = ""
+
                     td.appendChild(elementText)
-                    if (item == "description") {
+                    if (item == "number") {
                         td.removeChild(elementText)
                     }
                     tr.appendChild(td)
@@ -50,19 +53,22 @@ const Phases = () => {
 
     return (
         <div class="table-container">
-            <table id="phases">
+            <table id="classes">
                 <thead>
                     <tr>
                         <th id="id">ID</th>
-                        <th id="description">Descrição</th>
+                        <th id="number">Número</th>
+                        <th id="specification">Especificação</th>
+                        <th id="baseNumber">Número de base</th>
                     </tr>
                 </thead>
-                <tbody id="phase-content">
+                <tbody id="class-content">
 
                 </tbody>
             </table>
+            <div class="create-element"><a href={`/pages/admin/createClass`}>Criar classe</a></div>
         </div>
     )
 }
 
-export default Phases
+export default AllClasses

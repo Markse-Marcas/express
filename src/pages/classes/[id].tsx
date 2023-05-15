@@ -84,38 +84,42 @@ const Class = () => {
     }
 
     return (
-        <div aria-live="polite">
-            <form onSubmit={updateClass} class="">
-                <div>
-                    <label for="number">Número: </label>
-                    <input
-                        id="number"
-                        type="number"
-                        min={1}
-                        max={45}
-                        value={number()}
-                        required
-                        onChange={(e) => setNumber(Number.parseInt(e.currentTarget.value))}
-                    />
+        <div class="container" aria-live="polite">
+            <form onSubmit={updateClass}>
+                <div class="input-group">
+                    <div class="input-box">
+                        <label for="number">Número: </label>
+                        <input
+                            id="number"
+                            type="number"
+                            min={1}
+                            max={45}
+                            value={number()}
+                            required
+                            onChange={(e) => setNumber(Number.parseInt(e.currentTarget.value))}
+                        />
+                    </div>
+                    <div class="input-box">
+                        <label for="specification">Especificação</label>
+                        <input
+                            id="specification"
+                            type="text"
+                            value={specification() || ''}
+                            onChange={(e) => setSpecification(e.currentTarget.value)}
+                        />
+                    </div>
+                    <div class="input-box">
+                        <label for="base_number">Número de base: </label>
+                        <input
+                            id="base_number"
+                            type="number"
+                            min={0}
+                            value={baseNumber()}
+                            onChange={(e) => setBaseNumber(Number.parseInt(e.currentTarget.value))}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <label for="specification">Especificação</label>
-                    <input
-                        id="specification"
-                        type="text"
-                        value={specification() || ''}
-                        onChange={(e) => setSpecification(e.currentTarget.value)}
-                    />
-                </div>
-                <label for="base_number">Número de base: </label>
-                <input
-                    id="base_number"
-                    type="number"
-                    min={0}
-                    value={baseNumber()}
-                    onChange={(e) => setBaseNumber(Number.parseInt(e.currentTarget.value))}
-                />
-                <div>
+                <div class="continue-button">
                     <button type="submit" class="" disabled={loading()}>
                         {loading() ? 'Carregando...' : 'Atualizar classe'}
                     </button>

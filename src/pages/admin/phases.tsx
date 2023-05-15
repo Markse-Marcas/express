@@ -1,7 +1,8 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
+import { A } from "@solidjs/router"
 
-const Phases = () => {
+const AllPhases = () => {
     createEffect(() => {
         getPhases()
     })
@@ -49,20 +50,30 @@ const Phases = () => {
     }
 
     return (
-        <div class="table-container">
-            <table id="phases">
-                <thead>
-                    <tr>
-                        <th id="id">ID</th>
-                        <th id="description">Descrição</th>
-                    </tr>
-                </thead>
-                <tbody id="phase-content">
+        <>
+            <nav>
+                <ul class="nav-list">
+                    <li>
+                        <A href={`/pages/admin/customers/`}>Marcas</A>
+                    </li>
+                </ul>
+            </nav>
+            <div class="table-container">
+                <table id="phases">
+                    <thead>
+                        <tr>
+                            <th id="id">ID</th>
+                            <th id="description">Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody id="phase-content">
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+                <div class="create-element"><a href={`/pages/admin/createPhase`}>Criar fase</a></div>
+            </div>
+        </>
     )
 }
 
-export default Phases
+export default AllPhases

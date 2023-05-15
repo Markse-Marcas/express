@@ -3,8 +3,8 @@ import { supabase } from "../../supabaseClient"
 import { A, useParams } from "@solidjs/router"
 import { cookieStorage, createStorageSignal } from '@solid-primitives/storage'
 
-const Processes = () => {
-    const [value, setValue] = createStorageSignal("customer_brand_id", { api: cookieStorage })
+const AllProcesses = () => {
+    const [value, setValue] = createStorageSignal("admin_brand_id", { api: cookieStorage })
     const params = useParams()
     createEffect(() => {
         getProcesses()
@@ -15,12 +15,7 @@ const Processes = () => {
         try {
             const { data, error } = await supabase
                 .from('process')
-                .select(`
-                    id, 
-                    number, 
-                    description, 
-                    complement
-                `)
+                .select('id, number, description, created_at')
                 .eq("brand_id", params.id)
 
             if (error) {
@@ -33,11 +28,12 @@ const Processes = () => {
             data.map((processes) => {
                 const tr = document.createElement("tr")
                 for (let item in processes) {
-                    if (item == "complement" && processes.complement == null) {
-                        processes.complement = ''
-                    }
                     let td = document.createElement("td")
                     let elementText = document.createTextNode(processes[item])
+                    if (item == "created_at") {
+                        const date = new Date(processes.created_at)
+                        elementText = document.createTextNode(date.toLocaleDateString('pt-BR'))
+                    }
                     if (item == "number") {
                         let a = document.createElement("a")
                         a.className = "link"
@@ -66,7 +62,7 @@ const Processes = () => {
             <nav>
                 <ul class="nav-list">
                     <li>
-                        <A href={`/pages/brands`}>Suas marcas</A>
+                        <A href={`/pages/admin/customers/${localStorage.getItem("customer_id")}/brands`}>Marcas</A>
                     </li>
                 </ul>
             </nav>
@@ -77,15 +73,16 @@ const Processes = () => {
                             <th id="id"></th>
                             <th id="number">Número</th>
                             <th id="description">Descrição</th>
-                            <th id="complement">Complemento</th>
+                            <th id="date">Data</th>
                         </tr>
                     </thead>
                     <tbody id="processes-content">
 
                     </tbody>
                 </table>
+                <div class="create-element"><a href={`/pages/admin/createProcess`}>Criar processo</a></div>
             </div>
         </>
     )
 }
-export default Processes
+export default AllProcesses

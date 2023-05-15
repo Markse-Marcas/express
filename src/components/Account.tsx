@@ -1,7 +1,10 @@
 import { AuthSession } from '@supabase/supabase-js'
 import { Component, createEffect, createSignal } from 'solid-js'
 import { supabase } from '../supabaseClient'
-import Avatar from './Avatar';
+import Avatar from './Avatar'
+import Header from '../components/Header'
+import AdminHeader from '../components/AdminHeader'
+import { A } from '@solidjs/router'
 
 interface Props {
     session: AuthSession;
@@ -84,7 +87,7 @@ const Account: Component<Props> = ({ session }) => {
 
     return (
         <>
-            <div class="form">
+            <div class="form" aria-live="polite">
                 <form onSubmit={updateProfile}>
                     <Avatar url={avatarUrl()} size={150} onUpload={(e: Event, url: string) => {
                         setAvatarUrl(url)
@@ -149,7 +152,13 @@ const Account: Component<Props> = ({ session }) => {
                             {loading() ? 'Salvando...' : 'Atualizar perfil'}
                         </button>
                     </div>
+                    {/* <li><A href='#' onclick={() => { supabase.auth.signOut() }}>Sair</A></li> */}
                 </form>
+                <div class="continue-button">
+                    <button class="continue-button" onclick={() => { supabase.auth.signOut() }}>
+                        Sair
+                    </button>
+                </div>
             </div>
         </>
     )

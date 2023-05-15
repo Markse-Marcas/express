@@ -1,8 +1,9 @@
+
 import { Component } from 'solid-js'
 import { A } from '@solidjs/router'
 import { supabase } from '../supabaseClient'
 
-const Header: Component = () => {
+const AdminHeader: Component = () => {
     return (
         <>
             <header>
@@ -13,7 +14,7 @@ const Header: Component = () => {
                         <div class="line-3"></div>
                     </div>
                     <ul class="nav-list">
-                        <li><A href='/pages/brands'>Minhas marcas</A></li>
+                        <li><A href='/pages/admin/customers'>Clientes</A></li>
                     </ul>
                 </nav>
             </header>
@@ -21,4 +22,4 @@ const Header: Component = () => {
     )
 }
 
-export default Header
+export default AdminHeader

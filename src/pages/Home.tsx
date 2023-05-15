@@ -5,8 +5,7 @@ const Home = () => {
                 <div class="container">
                     <div class="info">
                         <h1>Mark-Se Express</h1>
-                        <h2>Aqui você irá gerenciar suas marcas e processos!</h2>
-                        <p>Você saberá, em tempo real, os status de processos de sua(s) marca(s)! Sem burocracia.</p>
+                        <h2>ACOMPANHE SEU PROCESSO EM TEMPO REAL!</h2>
                         <a href="/profile">Entre</a>
                     </div>
                 </div>

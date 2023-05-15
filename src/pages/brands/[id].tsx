@@ -1,10 +1,10 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
-import { session } from "../../App"
 import { useParams } from "@solidjs/router"
 
 const Brand = () => {
     const params = useParams()
+    const [brandId, setBrandId] = createSignal("")
     const [id, setID] = createSignal<string | null>(null)
     const [loading, setLoading] = createSignal(true)
     const [name, setName] = createSignal<string | null>(null)
@@ -21,7 +21,6 @@ const Brand = () => {
             let { data, error } = await supabase
                 .from('brand')
                 .select(`
-                    customer_id,
                     id,
                     name, 
                     status
@@ -34,41 +33,32 @@ const Brand = () => {
             }
 
 
-            if (data) {
-                setID(data.id)
-                setName(data.name)
-                setStatus(data.status)
+            const table = document.getElementById("brands")
+            const tbody = document.getElementById("brand-content") as HTMLElement
+            const tr = document.createElement("tr")
+            for (const item in data) {
+                let td = document.createElement("td")
+                let elementText = document.createTextNode(data[item])
+                if (item == "id") {
+                    setBrandId(data.id)
+                }
+                if (item == "profiles") {
+                    elementText = document.createTextNode(data.profiles.name)
+                }
+                td.appendChild(elementText)
+                tr.appendChild(td)
+                tbody?.appendChild(tr)
+                table?.appendChild(tbody)
             }
-        } catch (error) {
-            if (error instanceof Error) {
-                alert(error.message)
-            }
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const updateBrand = async (e: Event) => {
-        e.preventDefault()
-
-        try {
-            setLoading(true)
-
-            const updates = {
-                id: id(),
-                name: name(),
-                status: status(),
-                customer_id: session()?.user.id
-            }
-
-            let { error } = await supabase
-                .from('brand')
-                .upsert(updates)
-                .select()
-
-            if (error) {
-                throw error
-            }
+            let td = document.createElement("td")
+            let a = document.createElement("a")
+            a.className = "link"
+            a.href = `${window.location.href}/processes`
+            a.textContent = 'Processos'
+            td.appendChild(a)
+            tr.appendChild(td)
+            tbody?.appendChild(tr)
+            table?.appendChild(tbody)
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
@@ -79,39 +69,20 @@ const Brand = () => {
     }
 
     return (
-        <div class="" aria-live="polite">
-            <form onSubmit={updateBrand} class="">
-                <div class="">
-                    <label class="">
-                        <span class="">Nome da marca</span>
-                    </label>
-                    <input
-                        id="name"
-                        type="text"
-                        class=""
-                        value={name() || ''}
-                        onChange={(e) => setName(e.currentTarget.value)}
-                    />
-                </div>
-                <div class="">
-                    <label class="">
-                        <span class="">Status</span>
-                    </label>
-                    <input
-                        id="status"
-                        type="text"
-                        class=""
-                        value={status() || ''}
-                        onChange={(e) => setStatus(e.currentTarget.value)}
-                    />
-                </div>
-                <div>
-                    <button type="submit" class="" disabled={loading()}>
-                        {loading() ? 'Carregando...' : 'Atualizar marca'}
-                    </button>
-                </div>
-            </form>
-        </div >
+        <div class="table-container">
+            <table id="brands">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th id="name">Marca</th>
+                        <th id="status">Status</th>
+                        <th id="processes"></th>
+                    </tr>
+                </thead>
+                <tbody id="brand-content">
+                </tbody>
+            </table>
+        </div>
     )
 }
 

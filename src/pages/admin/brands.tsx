@@ -1,13 +1,17 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
-import { A } from "@solidjs/router"
+import { A, useParams } from "@solidjs/router"
+import { cookieStorage, createStorageSignal } from '@solid-primitives/storage'
 
-const Brands = () => {
+const [value, setValue] = createStorageSignal("customer_id", { api: cookieStorage })
+const AllBrands = () => {
+    const params = useParams()
     const [loading, setLoading] = createSignal(false)
     const [brandId, setBrandId] = createSignal("")
 
     createEffect(() => {
         getBrands()
+        setValue(params.id)
     })
 
     const getBrands = async () => {
@@ -15,7 +19,8 @@ const Brands = () => {
             setLoading(true)
             const { data, error } = await supabase
                 .from('brand')
-                .select('id, name, status')
+                .select('id, name, status, profiles(name)')
+                .eq("customer_id", params.id)
 
             if (error) {
                 throw error
@@ -33,10 +38,20 @@ const Brands = () => {
                         if (item == "id") {
                             setBrandId(brands.id)
                         }
+                        if (item == "name") {
+                            let a = document.createElement("a")
+                            a.className = "link"
+                            a.href = `/pages/brands/${brands.id}`
+                            a.textContent = `${elementText.textContent}`
+                            td.appendChild(a)
+                        }
                         if (item == "profiles") {
                             elementText = document.createTextNode(brands.profiles.name)
                         }
                         td.appendChild(elementText)
+                        if (item == "name") {
+                            td.removeChild(elementText)
+                        }
                         tr.appendChild(td)
                         tbody?.appendChild(tr)
                         table?.appendChild(tbody)
@@ -66,7 +81,10 @@ const Brands = () => {
             <nav>
                 <ul class="nav-list">
                     <li>
-                        <A href={`/profile`}>Perfil</A>
+                        <A href="/pages/admin/customers">Clientes</A>
+                    </li>
+                    <li>
+                        <A href="/profile">Perfil</A>
                     </li>
                 </ul>
             </nav>
@@ -77,15 +95,17 @@ const Brands = () => {
                             <th></th>
                             <th id="name">Marca</th>
                             <th id="status">Status</th>
+                            <th id="customer">Cliente</th>
                             <th id="processes"></th>
                         </tr>
                     </thead>
                     <tbody id="brand-content">
                     </tbody>
                 </table>
+                <div class="create-element"><a href={`/pages/admin/createBrand`}>Criar marca</a></div>
             </div>
         </>
     )
 }
 
-export default Brands
+export default AllBrands
