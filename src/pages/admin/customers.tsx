@@ -1,6 +1,7 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
 import { A } from "@solidjs/router"
+import AdminHeader from "../../components/Header"
 
 const Customers = () => {
     const [customerId, setCustomerId] = createSignal("")
@@ -66,7 +67,7 @@ const Customers = () => {
 
     return (
         <>
-            <nav>
+            {/* <nav>
                 <ul class="nav-list">
                     <li>
                         <A href="/pages/admin/classes">Classes</A>
@@ -81,7 +82,7 @@ const Customers = () => {
                         <A href="/profile">Perfil</A>
                     </li>
                 </ul>
-            </nav>
+            </nav> */}
             <div class="table-container">
                 <table id="customers">
                     <thead>

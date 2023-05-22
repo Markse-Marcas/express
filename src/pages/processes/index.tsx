@@ -63,13 +63,13 @@ const Processes = () => {
 
     return (
         <>
-            <nav>
+            {/* <nav>
                 <ul class="nav-list">
                     <li>
                         <A href={`/pages/brands`}>Suas marcas</A>
                     </li>
                 </ul>
-            </nav>
+            </nav> */}
             <div class="table-container">
                 <table id="processes">
                     <thead>

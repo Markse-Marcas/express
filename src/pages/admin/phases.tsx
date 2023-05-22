@@ -51,13 +51,6 @@ const AllPhases = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/pages/admin/customers/`}>Marcas</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="table-container">
                 <table id="phases">
                     <thead>

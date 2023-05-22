@@ -1,11 +1,26 @@
-import { createSignal } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
-import { A } from '@solidjs/router'
+import { A, useNavigate } from '@solidjs/router'
 
 export default function Auth() {
+    const navigate = useNavigate()
     const [email, setEmail] = createSignal('')
     const [loading, setLoading] = createSignal(false)
     const [password, setPassword] = createSignal('')
+
+    createEffect(() => {
+        currentSession()
+    })
+
+    async function currentSession() {
+        const { data, error } = await supabase.auth.getSession()
+        if (data.session != null) {
+            navigate("/profile")
+        }
+        else {
+            navigate("/")
+        }
+    }
 
     const handleLogin = async (e: SubmitEvent) => {
         e.preventDefault()
@@ -19,6 +34,7 @@ export default function Auth() {
                 }
             )
             if (error) throw error
+            if (data) navigate("/profile")
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)

@@ -1,7 +1,6 @@
 import { createEffect, createSignal } from "solid-js"
-import { v4 as uuidv4 } from 'uuid'
 import { supabase } from "../../supabaseClient"
-import { A, useParams } from "@solidjs/router"
+import { useParams } from "@solidjs/router"
 
 const Process = () => {
     const params = useParams()
@@ -49,13 +48,6 @@ const Process = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/pages/brands/${localStorage.getItem("customer_brand_id")}/processes`}>Seus processos</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="table-container">
                 <table id="processes">
                     <thead>

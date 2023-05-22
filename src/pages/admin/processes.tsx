@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from "solid-js"
+import { createEffect } from "solid-js"
 import { supabase } from "../../supabaseClient"
 import { A, useParams } from "@solidjs/router"
 import { cookieStorage, createStorageSignal } from '@solid-primitives/storage'
@@ -59,13 +59,6 @@ const AllProcesses = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/pages/admin/customers/${localStorage.getItem("customer_id")}/brands`}>Marcas</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="table-container">
                 <table id="processes">
                     <thead>

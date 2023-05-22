@@ -2,6 +2,7 @@ import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
 import { A, useParams } from "@solidjs/router"
 import { cookieStorage, createStorageSignal } from '@solid-primitives/storage'
+import AdminHeader from "../../components/Header"
 
 const [value, setValue] = createStorageSignal("customer_id", { api: cookieStorage })
 const AllBrands = () => {
@@ -38,20 +39,11 @@ const AllBrands = () => {
                         if (item == "id") {
                             setBrandId(brands.id)
                         }
-                        if (item == "name") {
-                            let a = document.createElement("a")
-                            a.className = "link"
-                            a.href = `/pages/brands/${brands.id}`
-                            a.textContent = `${elementText.textContent}`
-                            td.appendChild(a)
-                        }
+
                         if (item == "profiles") {
                             elementText = document.createTextNode(brands.profiles.name)
                         }
                         td.appendChild(elementText)
-                        if (item == "name") {
-                            td.removeChild(elementText)
-                        }
                         tr.appendChild(td)
                         tbody?.appendChild(tr)
                         table?.appendChild(tbody)
@@ -78,16 +70,6 @@ const AllBrands = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href="/pages/admin/customers">Clientes</A>
-                    </li>
-                    <li>
-                        <A href="/profile">Perfil</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="table-container">
                 <table id="brands">
                     <thead>

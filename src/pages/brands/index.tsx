@@ -63,13 +63,6 @@ const Brands = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/profile`}>Perfil</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="table-container">
                 <table id="brands">
                     <thead>

@@ -54,13 +54,6 @@ const CreateCustomer = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href="/profile">Perfil</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="container">
                 <div class="form">
                     <form onSubmit={handleSignUp}>

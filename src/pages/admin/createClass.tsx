@@ -35,13 +35,6 @@ const CreateClass = () => {
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/pages/admin/customers/`}>Marcas</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="container" aria-live="polite">
                 <form onSubmit={createClass}>
                     <div class="input-group">

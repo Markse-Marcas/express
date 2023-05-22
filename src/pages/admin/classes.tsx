@@ -1,5 +1,6 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
+import { A } from "@solidjs/router"
 
 const AllClasses = () => {
     createEffect(() => {
@@ -52,22 +53,24 @@ const AllClasses = () => {
     }
 
     return (
-        <div class="table-container">
-            <table id="classes">
-                <thead>
-                    <tr>
-                        <th id="id">ID</th>
-                        <th id="number">Número</th>
-                        <th id="specification">Especificação</th>
-                        <th id="baseNumber">Número de base</th>
-                    </tr>
-                </thead>
-                <tbody id="class-content">
+        <>
+            <div class="table-container">
+                <table id="classes">
+                    <thead>
+                        <tr>
+                            <th id="id">ID</th>
+                            <th id="number">Número</th>
+                            <th id="specification">Especificação</th>
+                            <th id="baseNumber">Número de base</th>
+                        </tr>
+                    </thead>
+                    <tbody id="class-content">
 
-                </tbody>
-            </table>
-            <div class="create-element"><a href={`/pages/admin/createClass`}>Criar classe</a></div>
-        </div>
+                    </tbody>
+                </table>
+                <div class="create-element"><a href={`/pages/admin/createClass`}>Criar classe</a></div>
+            </div>
+        </>
     )
 }
 

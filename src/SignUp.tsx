@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js"
 import { supabase } from "./supabaseClient"
-import { v4 as uuidv4, validate } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 const SignUp = () => {
     const [email, setEmail] = createSignal('')
@@ -35,8 +35,8 @@ const SignUp = () => {
                         phone: phone(),
                         username: username(),
                         id: id()
-                    }
-                    // , emailRedirectTo: 'https://main--markse-express.netlify.app/profile'
+                    },
+                    emailRedirectTo: 'https://main--markse-express.netlify.app/profile'
                 }
             })
 

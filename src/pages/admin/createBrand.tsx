@@ -35,19 +35,12 @@ const CreateBrand = () => {
             }
         } finally {
             setLoading(false)
-            window.location.href = `http://localhost:3000/pages/admin/customers/${customerId()}/brands`
+            window.location.href = `https://main--markse-express.netlify.app/pages/admin/customers/${customerId()}/brands`
         }
     }
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/pages/admin/customers/${customerId()}/brands`}>Marcas</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="container" aria-live="polite">
                 <form onSubmit={createBrand}>
                     <div class="input-group">

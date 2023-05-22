@@ -1,6 +1,5 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
-import { v4 as uuidv4 } from 'uuid'
 import { useParams } from "@solidjs/router"
 
 const Class = () => {
@@ -55,9 +54,6 @@ const Class = () => {
 
         try {
             setLoading(true)
-
-            if (!id())
-                setID(uuidv4())
 
             const updates = {
                 baseNumber: baseNumber(),

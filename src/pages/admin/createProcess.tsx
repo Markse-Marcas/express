@@ -1,6 +1,6 @@
 import { createEffect, createSignal } from "solid-js"
 import { supabase } from "../../supabaseClient"
-import { A } from "@solidjs/router"
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateProcess = () => {
     const [activityClass, setActivityClass] = createSignal("")
@@ -119,15 +119,18 @@ const CreateProcess = () => {
                     activity_class: activityClass(),
                     description: description(),
                     complement: complement(),
-                    brand_id: brandId()
+                    brand_id: brandId(),
+                    id: uuidv4()
                 })
                 .select()
 
-            insertDataOnPhaseProcessTable(phase(), data?.id)
-                .then(() => insertDataOnBrandClassTable(brandId(), activityClass()))
-
             if (error) {
                 throw error
+            }
+
+            if (data) {
+                insertDataOnPhaseProcessTable(phase(), data.id)
+                insertDataOnBrandClassTable(brandId(), activityClass())
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -135,67 +138,62 @@ const CreateProcess = () => {
             }
         } finally {
             setLoading(false)
-            window.location.href = `https://main--markse-express.netlify.app/pages/admin/customers/${localStorage.getItem("customer_id")}/brands/${localStorage.getItem("admin_brand_id")}/processes`
+            // window.location.href = `https://main--markse-express.netlify.app/pages/admin/customers/${localStorage.getItem("customer_id")}/brands/${localStorage.getItem("admin_brand_id")}/processes`
         }
     }
 
     return (
         <>
-            <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href={`/pages/admin/customers/${localStorage.getItem("customer_id")}/brands/${localStorage.getItem("admin_brand_id")}/processes`}>Processos</A>
-                    </li>
-                </ul>
-            </nav>
             <div class="container" aria-live="polite">
-                <form onSubmit={createProcess}>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <label for="number">Número</label>
-                            <input
-                                id="number"
-                                type="text"
-                                value={number() || ''}
-                                onChange={(e) => setNumber(Number.parseInt(e.currentTarget.value))}
-                            />
+                <div class="form">
+                    <form onSubmit={createProcess}>
+                        <div class="input-group">
+                            <div class="input-box">
+                                <label for="number">Número</label>
+                                <input
+                                    id="number"
+                                    type="text"
+                                    value={number() || ''}
+                                    onChange={(e) => setNumber(Number.parseInt(e.currentTarget.value))}
+                                />
+                            </div>
+                            <div class="input-box">
+                                <label for="description">Descrição</label>
+                                <input
+                                    id="description"
+                                    type="text"
+                                    value={description() || ''}
+                                    required
+                                    onChange={(e) => setDescription(e.currentTarget.value)}
+                                />
+                            </div>
+                            <div class="input-box">
+                                <label for="complement">Complemento</label>
+                                <input
+                                    id="complement"
+                                    type="text"
+                                    value={complement() || ''}
+                                    onChange={(e) => setComplement(e.currentTarget.value)}
+                                />
+                            </div>
+                            <div class="input-box">
+                                <select name="classes" id="classes" required onchange={(e) => { setActivityClass(e.target.value); }}>
+                                    <option selected disabled>Escolha uma classe: </option>
+                                </select>
+                            </div>
+                            <div class="input-box">
+                                <select name="phases" id="phases" required onchange={(e) => { setPhase(e.target.value); }}>
+                                    <option selected disabled>Escolha uma fase: </option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="input-box">
-                            <label for="description">Descrição</label>
-                            <input
-                                id="description"
-                                type="text"
-                                value={description() || ''}
-                                required
-                                onChange={(e) => setDescription(e.currentTarget.value)}
-                            />
+                        <div class="continue-button">
+                            <button type="submit" disabled={loading()}>
+                                {loading() ? 'Carregando...' : 'Salvar'}
+                            </button>
                         </div>
-                        <div class="input-box">
-                            <label for="complement">Complemento</label>
-                            <input
-                                id="complement"
-                                type="text"
-                                value={complement() || ''}
-                                onChange={(e) => setComplement(e.currentTarget.value)}
-                            />
-                        </div>
-                        <div class="input-box">
-                            <select name="classes" id="classes" required onchange={(e) => { setActivityClass(e.target.value); }}>
-                                <option selected disabled>Escolha uma classe: </option>
-                            </select>
-                        </div>
-                        <div class="input-box">
-                            <select name="phases" id="phases" required onchange={(e) => { setPhase(e.target.value); }}>
-                                <option selected disabled>Escolha uma fase: </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="continue-button">
-                        <button type="submit" disabled={loading()}>
-                            {loading() ? 'Carregando...' : 'Salvar'}
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </>
     )

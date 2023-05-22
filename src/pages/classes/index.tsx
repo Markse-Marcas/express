@@ -13,6 +13,7 @@ const Classes = () => {
             const { data, error } = await supabase
                 .from('class')
                 .select('id, number, specification, base_number')
+                .order("number", { ascending: false })
 
             if (error) {
                 throw error

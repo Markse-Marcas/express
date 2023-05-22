@@ -2,16 +2,15 @@ import { AuthSession } from '@supabase/supabase-js'
 import { Component, createEffect, createSignal } from 'solid-js'
 import { supabase } from '../supabaseClient'
 import Avatar from './Avatar'
-import Header from '../components/Header'
-import AdminHeader from '../components/AdminHeader'
-import { A } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router';
 
 interface Props {
     session: AuthSession;
 }
 
 const Account: Component<Props> = ({ session }) => {
-    const [avatarUrl, setAvatarUrl] = createSignal<string | null>(null)
+    const navigate = useNavigate()
+    const [avatarUrl, setAvatarUrl] = createSignal<string | null>("")
     const [loading, setLoading] = createSignal(true)
     const [lastname, setLastName] = createSignal<string | null>(null)
     const [name, setName] = createSignal<string | null>(null)
@@ -21,6 +20,11 @@ const Account: Component<Props> = ({ session }) => {
     createEffect(() => {
         getProfile()
     })
+
+    async function signOut() {
+        supabase.auth.signOut()
+        navigate("/", { replace: true })
+    }
 
     const getProfile = async () => {
         try {
@@ -89,7 +93,7 @@ const Account: Component<Props> = ({ session }) => {
         <>
             <div class="form" aria-live="polite">
                 <form onSubmit={updateProfile}>
-                    <Avatar url={avatarUrl()} size={150} onUpload={(e: Event, url: string) => {
+                    <Avatar url={avatarUrl()} size={180} onUpload={(e: Event, url: string) => {
                         setAvatarUrl(url)
                         updateProfile(e)
                     }} />
@@ -152,10 +156,9 @@ const Account: Component<Props> = ({ session }) => {
                             {loading() ? 'Salvando...' : 'Atualizar perfil'}
                         </button>
                     </div>
-                    {/* <li><A href='#' onclick={() => { supabase.auth.signOut() }}>Sair</A></li> */}
                 </form>
                 <div class="continue-button">
-                    <button class="continue-button" onclick={() => { supabase.auth.signOut() }}>
+                    <button class="continue-button" onclick={() => { signOut() }}>
                         Sair
                     </button>
                 </div>
