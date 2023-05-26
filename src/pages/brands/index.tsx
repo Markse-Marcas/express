@@ -32,6 +32,7 @@ const Brands = () => {
                         let elementText = document.createTextNode(brands[item])
                         if (item == "id") {
                             setBrandId(brands.id)
+                            td.setAttribute("class", "hideId")
                         }
                         if (item == "profiles") {
                             elementText = document.createTextNode(brands.profiles.name)
@@ -67,7 +68,6 @@ const Brands = () => {
                 <table id="brands">
                     <thead>
                         <tr>
-                            <th></th>
                             <th id="name">Marca</th>
                             <th id="status">Status</th>
                             <th id="processes"></th>

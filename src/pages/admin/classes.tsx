@@ -25,6 +25,10 @@ const AllClasses = () => {
                 for (let item in classes) {
                     let td = document.createElement("td")
                     let elementText = document.createTextNode(classes[item])
+
+                    if (item == "id")
+                        td.setAttribute("class", "hideId")
+
                     if (item == "number") {
                         let a = document.createElement("a")
                         a.className = "link"
@@ -58,7 +62,6 @@ const AllClasses = () => {
                 <table id="classes">
                     <thead>
                         <tr>
-                            <th id="id">ID</th>
                             <th id="number">Número</th>
                             <th id="specification">Especificação</th>
                             <th id="baseNumber">Número de base</th>

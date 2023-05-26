@@ -334,6 +334,7 @@ table td {
 }
 
 thead th {
+    text-align: left;
     background-color: #AAB7B8;
 }
 
@@ -349,6 +350,10 @@ tbody td {
     display: flex;
     justify-content: center;
     margin-top: 5rem;
+}
+
+.hideId {
+    display: none;
 }
 
 @media screen and (max-width: 83.125rem) {

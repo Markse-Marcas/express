@@ -53,9 +53,10 @@ const Header: Component = () => {
             setUserId(user.id)
         }
 
-        const avatarUrl = await getAvatarURL(userId())
-        setAvatarUrl(avatarUrl[0].avatar_url)
-        setUserImage()
+        const avatar = await getAvatarURL(userId())
+        console.log(avatar)
+        setAvatarUrl(avatar[0].avatar_url)
+        setUserImage(avatarUrl())
 
         if (user?.app_metadata.claims_admin == true) {
             setIsAdminUser(true)
@@ -64,8 +65,8 @@ const Header: Component = () => {
         }
     }
 
-    async function setUserImage() {
-        const { data } = await supabase.storage.from('avatars').getPublicUrl(avatarUrl())
+    async function setUserImage(url: string) {
+        const { data } = await supabase.storage.from('avatars').getPublicUrl(url)
         const $imgElement = document.getElementById('userLogo') as HTMLImageElement
         if (data.publicUrl.endsWith("null")) {
             $imgElement.src = noimage

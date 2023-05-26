@@ -25,6 +25,10 @@ const AllPhases = () => {
                 for (let item in phases) {
                     let td = document.createElement("td")
                     let elementText = document.createTextNode(phases[item])
+
+                    if (item == "id")
+                        td.setAttribute("class", "hideId")
+
                     if (item == "description") {
                         let a = document.createElement("a")
                         a.className = "link"
@@ -55,7 +59,6 @@ const AllPhases = () => {
                 <table id="phases">
                     <thead>
                         <tr>
-                            <th id="id">ID</th>
                             <th id="description">Descrição</th>
                         </tr>
                     </thead>

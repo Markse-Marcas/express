@@ -31,6 +31,7 @@ const Customers = () => {
                         let elementText = document.createTextNode(customer[item])
                         if (item == "id") {
                             setCustomerId(customer.id)
+                            td.setAttribute("class", "hideId")
                         }
                         // if (item == "name") {
                         //     let a = document.createElement("a")
@@ -67,27 +68,10 @@ const Customers = () => {
 
     return (
         <>
-            {/* <nav>
-                <ul class="nav-list">
-                    <li>
-                        <A href="/pages/admin/classes">Classes</A>
-                    </li>
-                    <li>
-                        <A href="/pages/admin/customers">Clientes</A>
-                    </li>
-                    <li>
-                        <A href="/pages/admin/phases">Fases</A>
-                    </li>
-                    <li>
-                        <A href="/profile">Perfil</A>
-                    </li>
-                </ul>
-            </nav> */}
             <div class="table-container">
                 <table id="customers">
                     <thead>
                         <tr>
-                            <th></th>
                             <th id="username">Username</th>
                             <th id="name">Nome</th>
                             <th id="phone">Telefone</th>

@@ -30,6 +30,10 @@ const AllProcesses = () => {
                 for (let item in processes) {
                     let td = document.createElement("td")
                     let elementText = document.createTextNode(processes[item])
+
+                    if (item == "id")
+                        td.setAttribute("class", "hideId")
+
                     if (item == "created_at") {
                         const date = new Date(processes.created_at)
                         elementText = document.createTextNode(date.toLocaleDateString('pt-BR'))
@@ -63,7 +67,6 @@ const AllProcesses = () => {
                 <table id="processes">
                     <thead>
                         <tr>
-                            <th id="id"></th>
                             <th id="number">Número</th>
                             <th id="description">Descrição</th>
                             <th id="date">Data</th>
