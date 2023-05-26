@@ -1,14 +1,14 @@
+import { useNavigate } from "@solidjs/router"
 import { createSignal } from "solid-js"
-import { supabase } from "../../supabaseClient"
-import { A } from "@solidjs/router"
 
 const CreateCustomer = () => {
+    const [confirmPassword, setConfirmPassword] = createSignal('')
     const [email, setEmail] = createSignal('')
     const [lastName, setLastName] = createSignal('')
     const [loading, setLoading] = createSignal(false)
     const [name, setName] = createSignal('')
+    const navigate = useNavigate()
     const [password, setPassword] = createSignal('')
-    const [confirmPassword, setConfirmPassword] = createSignal('')
     const [phone, setPhone] = createSignal('')
     const [username, setUserName] = createSignal('')
 
@@ -23,26 +23,36 @@ const CreateCustomer = () => {
                 return false;
             }
 
-            const { data, error } = await supabase
-                .auth
-                .signUp({
-                    email: email(),
-                    password: password(),
-                    options: {
-                        data: {
-                            last_name: lastName(),
-                            name: name(),
-                            phone: phone(),
-                            username: username()
-                        }
-                    }
-                })
+            let user = {
+                email: email(),
+                password: password(),
+                email_confirm: true,
+                last_name: lastName(),
+                name: name(),
+                phone: phone(),
+                username: username()
+            };
 
-            if (error) {
-                throw error
-            }
+            // email: email(),
+            // password: password(),
+            // email_confirm: true,
+            // last_name: lastName(),
+            // name: name(),
+            // phone: phone(),
+            // username: username()
 
-            // window.location.href = "/"
+            let response = await fetch('/api/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(user)
+            });
+
+            let result = await response.json();
+            console.log(result.message);
+
+            //navigate("/pages/admin/customers", { replace: true })
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)
